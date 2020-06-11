@@ -22,25 +22,18 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
              throw new NoSuchElementException();
         }
+
         int rsl = 0;
-            if (data[row].length == 0) {
-                for (int i = row; i <= data.length; i++) {
-                    row++;
-                    if (data[row].length != 0) {
-                        rsl = data[row][column];
-                        break;
-                    }
-                }
+            while (data[row].length == 0) {
                 row++;
-                } else {
-                if (column == data[row].length - 1) {
-                    rsl = data[row][column];
-                    row++;
-                } else {
-                    rsl = data[row][column];
-                    column++;
                 }
-            }
+        if (column == data[row].length - 1) {
+            rsl = data[row][column];
+            row++;
+        } else {
+            rsl = data[row][column];
+            column++;
+        }
         return rsl;
     }
 }
