@@ -20,7 +20,7 @@ public class Converter {
 
             @Override
             public Integer next() {
-                if (!hasNext() && !it.hasNext() && curIt.hasNext()) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return curIt.next();
