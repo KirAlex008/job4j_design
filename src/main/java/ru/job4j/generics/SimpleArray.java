@@ -24,7 +24,7 @@ public class SimpleArray <T> implements Iterable<T> {
     }
 
     public T get(int position) {
-        return (T) this.objects[Objects.checkIndex(position, objects.length)];
+        return (T) this.objects[Objects.checkIndex(position, index + 1)];
     }
 
     public void set(int position, T model) {
@@ -32,7 +32,7 @@ public class SimpleArray <T> implements Iterable<T> {
     }
 
     public void remove(int position) {
-        int rsl = Objects.checkIndex(position, objects.length);
+        int rsl = Objects.checkIndex(position, index + 1);
         System.arraycopy(objects, rsl + 1, objects,
                 rsl, objects.length - 1 - rsl);
     }
