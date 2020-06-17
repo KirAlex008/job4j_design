@@ -54,10 +54,6 @@ public class SimpleArray <T> implements Iterable<T> {
                 return (T) objects[point++];
             }
         };
-
-        //FIXME:
-        // Objects.checkIndex when gut Example from Tracker
-        // Objects.checkIndex when bad Example from Tracker
     }
 
 }
