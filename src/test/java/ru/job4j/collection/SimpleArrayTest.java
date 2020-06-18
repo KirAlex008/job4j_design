@@ -1,4 +1,3 @@
-/*
 package ru.job4j.collection;
 
 import static org.junit.Assert.assertThat;
@@ -55,4 +54,4 @@ public class SimpleArrayTest {
         it.next();
     }
 
-}*/
+}
