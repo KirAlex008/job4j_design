@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 
 public class Converter {
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
-
         return new Iterator<Integer>() {
 
             private Iterator<Integer> curIt = it.next();

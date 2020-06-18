@@ -4,19 +4,16 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleArray <T> implements Iterable<T> {
+public class SimpleArrayStatic<T> implements Iterable<T> {
 
     private Object[] objects;
-    private int index = 0;
-    private int point = 0;
-    private int size = 0;
+    private int index = 0; // elements number of array
+    private int point = 0; // iterator counter
+    private int size; // array length
 
-    public SimpleArray(int size) {
+    public SimpleArrayStatic(int size) {
         this.objects = new Object[size];
         this.size = size;
-    }
-    public int size() {
-        return size;
     }
 
     public void add(T value) {
@@ -24,17 +21,18 @@ public class SimpleArray <T> implements Iterable<T> {
     }
 
     public T get(int position) {
-        return (T) this.objects[Objects.checkIndex(position, index + 1)];
+        return (T) this.objects[Objects.checkIndex(position, index)];
     }
 
     public void set(int position, T model) {
-        this.objects[Objects.checkIndex(position, objects.length)] = model;
+        this.objects[Objects.checkIndex(position, index)] = model;
     }
 
     public void remove(int position) {
-        int rsl = Objects.checkIndex(position, index + 1);
+        int rsl = Objects.checkIndex(position, index);
         System.arraycopy(objects, rsl + 1, objects,
                 rsl, objects.length - 1 - rsl);
+        index--;
     }
 
     @Override
@@ -55,7 +53,6 @@ public class SimpleArray <T> implements Iterable<T> {
             }
         };
     }
-
 }
 
 

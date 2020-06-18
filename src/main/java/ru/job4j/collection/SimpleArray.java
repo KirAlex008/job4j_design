@@ -1,19 +1,60 @@
 package ru.job4j.collection;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
 
-    public T get(int index) {
-        return null;
+    private Object[] objects;
+    private int index = 0; // elements number of array
+    private int point = 0; // iterator counter
+    private int size; // array length
+    private int elementCount = 0; // counter for iterator
+
+    public SimpleArray(int size) {
+        this.objects = new Object[size];
+        this.size = size;
+    }
+    public int size() {
+        return size;
     }
 
-    public void add(T model) {
+    public void add(T value) {
+        this.objects[index++] = value;
+    }
 
+    public T get(int position) {
+        return (T) this.objects[Objects.checkIndex(position, index + 1)];
+    }
+
+    public void set(int position, T model) {
+        this.objects[Objects.checkIndex(position, objects.length)] = model;
+    }
+
+    public void remove(int position) {
+        int rsl = Objects.checkIndex(position, index + 1);
+        System.arraycopy(objects, rsl + 1, objects,
+                rsl, objects.length - 1 - rsl);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<T>() {
+
+            @Override
+            public boolean hasNext() {
+                return point < objects.length;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (T) objects[point++];
+            }
+        };
     }
+
 }
