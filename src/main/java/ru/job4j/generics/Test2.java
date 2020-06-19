@@ -1,12 +1,10 @@
 package ru.job4j.generics;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class Test2 {
     public static void main(String[] args) {
+        List<String> list = new LinkedList<>();
         int length = 0;
         int index = 0;
         //Objects.checkIndex(index, length);

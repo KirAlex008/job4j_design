@@ -41,7 +41,7 @@ public class SimpleArrayStatic<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return point < objects.length;
+                return point < index;
             }
 
             @Override
