@@ -7,7 +7,7 @@ public class SimpleArray<T> implements Iterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] objects;
     private int index = 0; // elements number of array
-    private int point = 0; // iterator counter
+
     private int size; // array length
     private int modCount = 0; // counter for iterator
     private int elementData;
@@ -53,13 +53,14 @@ public class SimpleArray<T> implements Iterable<T> {
         System.arraycopy(objects, rsl + 1, objects,
                 rsl, objects.length - 1 - rsl);
         index--;
-        modCount--;
+        modCount++;
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             int expectedModCount = modCount;
+            private int point = 0; // iterator counter
 
             @Override
             public boolean hasNext() {
