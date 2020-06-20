@@ -63,7 +63,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
                     throw new ConcurrentModificationException();
                 }
                 if (point == null) {
-                    rsl =false;
+                    rsl = false;
                 }
                 return rsl;
             }
@@ -74,6 +74,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
                     throw new NoSuchElementException();
                 }
                 modCount++;
+                point = point.next;
                 return (E) point;
             }
         };
