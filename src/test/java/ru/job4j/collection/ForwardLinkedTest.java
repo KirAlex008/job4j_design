@@ -8,6 +8,9 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import static org.hamcrest.core.IsNull.nullValue;
+import org.hamcrest.core.IsNull;
+
 public class ForwardLinkedTest {
 
     @Test(expected = NoSuchElementException.class)
@@ -32,5 +35,19 @@ public class ForwardLinkedTest {
         linked.deleteFirst();
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteLast() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.add(1);
+        linked.add(2);
+        linked.add(3);
+        linked.deleteLast();
+        Iterator<Integer> it = linked.iterator();
+        it.next();
+        it.next();
+        it.next();
+        //assertThat(it.next(), (is(IsNull.nullValue())));
     }
 }
