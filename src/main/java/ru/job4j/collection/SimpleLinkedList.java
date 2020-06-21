@@ -18,13 +18,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return first == null;
     }
 
-    public Node getFirst(Node n) {
-        return first;
-    }
-
     public void add(E value) {
         Node<E> newNode = new Node(value);
-        if (isEmpty()) {
+        if (first == null) {
             first = newNode;
         } else {
             last.next = newNode;
@@ -52,10 +48,6 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             private Node<E> point = first; // iterator current link
             private Node<E> previousPoint; // iterator previous link
 
-            public void reset() {
-                point = first;
-            }
-
             @Override
             public boolean hasNext() {
                 boolean rsl = true;
@@ -73,9 +65,8 @@ public class SimpleLinkedList<E> implements Iterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                modCount++;
                 point = point.next;
-                return (E) point;
+                return (E) point.item;
             }
         };
     }

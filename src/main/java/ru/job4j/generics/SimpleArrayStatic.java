@@ -38,6 +38,7 @@ public class SimpleArrayStatic<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
+            //private int point = 0; // iterator counter
 
             @Override
             public boolean hasNext() {
