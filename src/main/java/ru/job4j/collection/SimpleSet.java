@@ -8,36 +8,20 @@ public class SimpleSet<T> implements Iterable<T>{
     private SimpleArray<T> set = new SimpleArray<T>();
 
     public boolean add(T value) {
-        T elemToAdd = value;
         boolean rsl = true;
-        for (T elem : set) {
-            if (elem.equals(value)){
+        if (set.contains(value)){
                 rsl = false;
-                break;
-            }
+            } else {
+            set.add(value);
         }
-        set.add(elemToAdd);
         return rsl;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return set.iterator();
+        return this.set.iterator();
     }
 
-   /* @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SimpleSet<?> simpleSet = (SimpleSet<?>) o;
-        return Objects.equals(set, simpleSet.set);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(set);
-    }
-*/
     public static void main(String[] args) {
         SimpleSet<String> set2 = new SimpleSet<String>();
         set2.add("first");

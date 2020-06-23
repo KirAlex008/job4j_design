@@ -4,14 +4,14 @@ import java.util.*;
 
 public class SimpleArray<T> implements Iterable<T> {
 
-    private static final int DEFAULT_CAPACITY = 1;
+    private static final int DEFAULT_CAPACITY = 10;
 
     private Object[] objects;
     private int index = 0; // elements number of array
 
     private int size; // array length
     private int modCount = 0; // counter for iterator
-    private int elementData;
+    private int elementData = 0;
 
     public SimpleArray(int size) {
         if (size > DEFAULT_CAPACITY) {
@@ -62,6 +62,17 @@ public class SimpleArray<T> implements Iterable<T> {
         index--;
         modCount++;
     }
+    
+    public boolean contains(T value) {
+        boolean rsl = false;
+        for (var elem : objects) {
+            if (value.equals(elem)) {
+                rsl = true;
+                break;
+            }
+        }
+        return rsl;
+    }
 
     @Override
     public Iterator<T> iterator() {
@@ -82,10 +93,21 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                modCount++;
                 return (T) objects[point++];
             }
         };
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleArray<?> that = (SimpleArray<?>) o;
+        return Arrays.equals(objects, that.objects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(objects);
+    }
 }
