@@ -70,4 +70,5 @@ public class ForwardLinkedTest {
         assertThat(it.next(), is(2));
         assertThat(it.next(), is(1));
     }
+
 }

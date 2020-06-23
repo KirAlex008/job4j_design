@@ -42,7 +42,8 @@ public class SimpleQueueTest {
         queue.push(2);
         assertThat( queue.poll(), is(1));
         queue.push(3);
-        assertThat(queue.poll(), is(2));
+        var rsl = queue.poll();
+        assertThat(rsl, is(2));
     }
 
     @Test(expected = NoSuchElementException.class)

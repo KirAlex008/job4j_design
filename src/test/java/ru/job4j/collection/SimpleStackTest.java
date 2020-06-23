@@ -31,4 +31,15 @@ public class SimpleStackTest {
         stack.pop();
         assertThat(stack.pop(), is(1));
     }
+
+    @Test
+    public void Test2() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.pop();
+        stack.pop();
+        stack.pop();
+        assertThat(stack.pop(), is(1));
+    }
 }
