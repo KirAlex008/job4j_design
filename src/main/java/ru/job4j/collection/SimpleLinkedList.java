@@ -46,7 +46,6 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return new Iterator<E>() {
             int expectedModCount = modCount;
             private Node<E> point = first; // iterator current link
-            private Node<E> previousPoint; // iterator previous link
 
             @Override
             public boolean hasNext() {

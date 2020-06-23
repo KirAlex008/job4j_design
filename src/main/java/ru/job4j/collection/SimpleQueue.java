@@ -16,7 +16,11 @@ public class SimpleQueue<T> {
        for (int i = index; i > 0; i--) {
            out.push(in.pop());
         }
-       index = 0;
-       return out.pop();
+       T rsl = out.pop();
+       index--;
+        for (int i = index; i > 0; i--) {
+            in.push(out.pop());
+        }
+       return rsl;
     }
 }
