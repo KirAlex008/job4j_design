@@ -1,6 +1,8 @@
 package ru.job4j.collection;
 
 import java.util.*;
+import java.lang.Object;
+
 
 public class SimpleArray<T> implements Iterable<T> {
 
@@ -66,7 +68,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public boolean contains(T value) {
         boolean rsl = false;
         for (var elem : objects) {
-            if (value.equals(elem)) {
+            if (Objects.equals(elem, value)) {
                 rsl = true;
                 break;
             }
@@ -96,18 +98,5 @@ public class SimpleArray<T> implements Iterable<T> {
                 return (T) objects[point++];
             }
         };
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SimpleArray<?> that = (SimpleArray<?>) o;
-        return Arrays.equals(objects, that.objects);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(objects);
     }
 }
