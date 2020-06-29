@@ -15,6 +15,9 @@ public class Experiment1 {
     public void map() {
         map1.put(obj1, "first");
         map1.put(obj2, "second");
+        System.out.println(obj1.hashCode());
+        System.out.println(obj2.hashCode());
+        System.out.println(obj2.equals(obj1));
         System.out.println(map1 );
 
     }
