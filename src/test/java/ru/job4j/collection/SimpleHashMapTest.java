@@ -21,11 +21,7 @@ public class SimpleHashMapTest {
         map.delete("first");
         assertThat(map.get("first"), is(IsNull.nullValue()));
     }
-    @Test(expected = NoSuchElementException.class)
-    public void whenGetEmpty() {
-        SimpleHashMap<String, String> map = new  SimpleHashMap<>();
-        map.get("0");
-    }
+
     @Test(expected = NoSuchElementException.class)
     public void whenGetEmptyFromIt() {
         SimpleHashMap<String, String> map = new  SimpleHashMap<>();

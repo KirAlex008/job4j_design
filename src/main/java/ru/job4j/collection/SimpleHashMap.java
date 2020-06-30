@@ -3,6 +3,7 @@ package ru.job4j.collection;
 import java.util.*;
 
 public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
+    private static float ratio = 0.75f;
     private Node<K, V>[] hashTable;
     private int size = 0;
     private float threshold;
@@ -11,7 +12,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
 
     public SimpleHashMap() {
         this.hashTable = new Node[16];
-        this.threshold = hashTable.length * 0.75f;
+        this.threshold = hashTable.length * ratio;
     }
 
     @Override
@@ -32,14 +33,37 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         List<Node<K, V>> nodeList = hashTable[index].getNodes();
 
         for (Node<K, V> node : nodeList ) {
-            if (keyExistButValueNew(node, newNode, value) ||
-                collisionProssessing(node, newNode, nodeList)) {
+            if (keyExistButValueNew(node, newNode, value)) {
                 rsl = true;
+                break;
             }
         }
-        modCount++;
-        counter++;
+
+        for (Node<K, V> node : nodeList ) {
+            if (collisionProssessing(node, newNode, nodeList)) {
+                rsl = true;
+                break;
+            }
+        }
+        if (rsl == true) {
+            counter++;
+            modCount++;
+        }
     return rsl;
+    }
+
+    private boolean collisionProssessing(
+            final Node<K, V> nodeFromList,
+            final Node<K, V> newNode,
+            final List<Node<K, V>> nodes) {
+        boolean rsl = false;
+        if (newNode.hashCode() == nodeFromList.hashCode() &&
+                !Objects.equals(newNode.key, nodeFromList.key)) {
+            nodes.add(newNode);
+            size++;
+            rsl = true;
+        }
+        return rsl;
     }
 
     private boolean simpleAdd(int index, Node<K, V> newNode) {
@@ -55,28 +79,14 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             final V value) {
         boolean rsl = false;
 
-        if (newNode.getKey().equals(nodeFromList.getKey()) &&
-                !newNode.getValue().equals(nodeFromList.getValue())) {
+        if (newNode.getKey().equals(nodeFromList.getKey())) {
             nodeFromList.setValue(value);
             rsl = true;
         }
         return rsl;
     }
 
-    private boolean collisionProssessing(
-            final Node<K, V> nodeFromList,
-            final Node<K, V> newNode,
-            final List<Node<K, V>> nodes) {
-        boolean rsl = false;
-        if (newNode.hashCode() == nodeFromList.hashCode() &&
-        !Objects.equals(newNode.key, nodeFromList.key) &&
-        !Objects.equals(newNode.value, nodeFromList.value)) {
-            nodes.add(newNode);
-            size++;
-            rsl = true;
-        }
-        return rsl;
-    }
+
 
     private void arrayDoubling() {
          Node<K, V>[] oldHashTable = hashTable;
@@ -95,12 +105,8 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     @Override
     public V get(K key) {
         V rsl = null;
-
         int index = hash(key);
-        if (hashTable[index] == null) {
-            throw new NoSuchElementException();
-        }
-        if (index < hashTable.length && hashTable[index] != null) {
+        if (hashTable[index] != null) {
 
             List<Node<K, V>> list = hashTable[index].getNodes();
             for (Node<K, V> node : list ) {
@@ -127,14 +133,25 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         }
         List<Node<K, V>> nodeList = hashTable[index].getNodes();
 
+        ListIterator<Node<K, V>> listIter = nodeList.listIterator();
+
+        while(listIter.hasNext()) {
+            if (key.equals(listIter.next().getKey())) {
+                nodeList.remove(listIter.next().getKey());
+                rsl = true;
+            }
+        }
+
         for (Node<K, V> node : nodeList ) {
             if (key.equals(node.getKey())) {
                 nodeList.remove(node);
                 rsl = true;
             }
         }
-        counter--;
-        modCount++;
+        if (rsl == true) {
+            counter--;
+            modCount++;
+        }
         return rsl;
     }
 
