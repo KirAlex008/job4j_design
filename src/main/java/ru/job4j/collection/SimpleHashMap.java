@@ -26,21 +26,15 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         Node<K, V> newNode = new Node<>(key, value);
         int index = newNode.hash();
 
-         if (hashTable[index] == null) {
+        if (hashTable[index] == null) {
             rsl = simpleAdd(index, newNode);
         }
 
         List<Node<K, V>> nodeList = hashTable[index].getNodes();
 
         for (Node<K, V> node : nodeList ) {
-            if (keyExistButValueNew(node, newNode, value)) {
-                rsl = true;
-                break;
-            }
-        }
-
-        for (Node<K, V> node : nodeList ) {
-            if (collisionProssessing(node, newNode, nodeList)) {
+            if (keyExistButValueNew(node, newNode, value) ||
+                    collisionProssessing(node, newNode, nodeList)) {
                 rsl = true;
                 break;
             }
@@ -49,7 +43,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             counter++;
             modCount++;
         }
-    return rsl;
+        return rsl;
     }
 
     private boolean collisionProssessing(
@@ -89,9 +83,9 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
 
 
     private void arrayDoubling() {
-         Node<K, V>[] oldHashTable = hashTable;
-         hashTable = new Node[oldHashTable.length * 2];
-         size = 0;
+        Node<K, V>[] oldHashTable = hashTable;
+        hashTable = new Node[oldHashTable.length * 2];
+        size = 0;
         for (Node<K, V> node : oldHashTable) {
             if (node != null) {
                 for (Node<K, V> n : node.getNodes()) {
