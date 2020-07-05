@@ -27,21 +27,25 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         int index = newNode.hash();
 
         if (hashTable[index] == null) {
-            rsl = simpleAdd(index, newNode);
+            simpleAdd(index, newNode);
+            counter++;
+            modCount++;
+            rsl = true;
         }
 
         List<Node<K, V>> nodeList = hashTable[index].getNodes();
 
         for (Node<K, V> node : nodeList ) {
-            if (keyExistButValueNew(node, newNode, value) ||
-                    collisionProssessing(node, newNode, nodeList)) {
+            if (keyExistButValueNew(node, newNode, value)) {
                 rsl = true;
                 break;
             }
-        }
-        if (rsl == true) {
-            counter++;
-            modCount++;
+            if (collisionProssessing(node, newNode, nodeList)) {
+                counter++;
+                modCount++;
+                rsl = true;
+                break;
+            }
         }
         return rsl;
     }
@@ -80,8 +84,6 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         return rsl;
     }
 
-
-
     private void arrayDoubling() {
         Node<K, V>[] oldHashTable = hashTable;
         hashTable = new Node[oldHashTable.length * 2];
@@ -95,7 +97,6 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         }
     }
 
-
     @Override
     public V get(K key) {
         V rsl = null;
@@ -106,6 +107,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             for (Node<K, V> node : list ) {
                 if (key.equals(node.getKey())) {
                     rsl = node.getValue();
+                    break;
                 }
             }
         }
@@ -116,39 +118,32 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         return size;
     }
 
-
     @Override
     public boolean delete(final K key) {
         boolean rsl = false;
         int index = hash(key);
-        if (hashTable[index].getNodes().size() == 1) {
+        List<Node<K, V>> nodeList = hashTable[index].getNodes();
+        ListIterator<Node<K, V>> listIter = nodeList.listIterator();
+
+        if (nodeList.size() == 1 && listIter.next().getKey().equals(key)) {
             hashTable[index].getNodes().remove(0);
             rsl = true;
         }
-        List<Node<K, V>> nodeList = hashTable[index].getNodes();
-
-        ListIterator<Node<K, V>> listIter = nodeList.listIterator();
 
         while(listIter.hasNext()) {
             if (key.equals(listIter.next().getKey())) {
                 nodeList.remove(listIter.next().getKey());
                 rsl = true;
+                break;
             }
         }
 
-        for (Node<K, V> node : nodeList ) {
-            if (key.equals(node.getKey())) {
-                nodeList.remove(node);
-                rsl = true;
-            }
-        }
         if (rsl == true) {
             counter--;
             modCount++;
         }
         return rsl;
     }
-
 
     private int hash(Node<K, V> node) {
         return node.hashCode() % hashTable.length;
@@ -157,7 +152,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     private int hash(final K key) {
         int hash = 31;
         hash = hash * 17 + key.hashCode();
-        return hash % hashTable.length;
+        return Math.abs(hash % hashTable.length);
     }
 
     private class Node<K, V> {
