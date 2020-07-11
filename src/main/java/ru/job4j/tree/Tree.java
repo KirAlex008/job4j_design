@@ -13,24 +13,14 @@ class Tree<E> implements SimpleTree<E> {
     public boolean add(E parent, E child) {
         boolean rsl = false;
         boolean stop = true;
-        Optional<Node<E>> current = findBy(parent);
-        List<Node<E>> list = current.get().children;
-        if (list.size() == 0) {
+        Optional<Node<E>> findParent = findBy(parent);
+        Optional<Node<E>> findChild = findBy(child);
+        List<Node<E>> list = null;
+        if (findParent.isPresent() && findChild.isEmpty()) {
+            list = findParent.get().children;
             Node<E> forvard = new Node<>(child);
             list.add(forvard);
             rsl = true;
-        } else {
-            for (var el : list) {
-                if (el.value.equals(child)) {
-                    stop = false;
-                    break;
-                }
-            }
-            if (stop) {
-                Node<E> forvard = new Node<>(child);
-                list.add(forvard);
-                rsl = true;
-            }
         }
               return rsl;
     }

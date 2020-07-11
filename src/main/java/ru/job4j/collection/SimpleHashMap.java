@@ -31,6 +31,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             counter++;
             modCount++;
             rsl = true;
+            return rsl;
         }
 
         List<Node<K, V>> nodeList = hashTable[index].getNodes();
