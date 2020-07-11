@@ -32,7 +32,7 @@ class Tree<E> implements SimpleTree<E> {
         Optional<Node<E>> findParent = findBy(parent);
         Optional<Node<E>> findChild = findBy(child);
         List<Node<E>> list = null;
-        if (findParent.isPresent() && findChild.isEmpty()) {
+        if (findChild.isEmpty() && findParent.isPresent()) {
             list = findParent.get().children;
             Node<E> forvard = new Node<>(child);
             list.add(forvard);
