@@ -3,12 +3,17 @@ package ru.job4j.statistics;
 import java.util.Objects;
 
 public class User {
-    int id;
+    Integer id;
     String name;
 
-    public User(int id, String name) {
+    public User(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.id + " " + this.name;
     }
 
     @Override
