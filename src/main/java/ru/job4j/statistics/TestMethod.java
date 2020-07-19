@@ -1,3 +1,4 @@
+/*
 package ru.job4j.statistics;
 
 import java.util.Collection;
@@ -65,9 +66,12 @@ public class TestMethod {
         //System.out.println(current + "current");
        //System.out.println(previous.get(1));
        System.out.println(mergingMap);
-        /*Analize analize = new Analize();
+        */
+/*Analize analize = new Analize();
         Info forTest = analize.diff(previous, current);
         System.out.println(forTest);
-        Info result = new Info(2);*/
+        Info result = new Info(2);*//*
+
     }
 }
+*/

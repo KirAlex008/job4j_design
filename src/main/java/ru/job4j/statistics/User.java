@@ -3,8 +3,8 @@ package ru.job4j.statistics;
 import java.util.Objects;
 
 public class User {
-    Integer id;
-    String name;
+    private Integer id;
+    private String name;
 
     public User(Integer id, String name) {
         this.id = id;
