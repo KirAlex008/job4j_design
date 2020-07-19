@@ -3,6 +3,7 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LogFilter {
@@ -24,9 +25,7 @@ public class LogFilter {
             lines.clear();
             for (String elem : wordsArray) {
                 String[] words = elem.split(" ");
-                for (String word : words) {
-                    lines.add(word);
-                }
+                lines.addAll(Arrays.asList(words));
                 for (int i = 0; i < lines.size(); i++) {
                     if(lines.get(i).equals("404") && isNumeric(lines.get(i + 1))) {
                         linesForReturn.add(elem);
