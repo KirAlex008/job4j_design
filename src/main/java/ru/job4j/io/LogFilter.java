@@ -5,43 +5,19 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.io.*;
 
 public class LogFilter {
     public static List<String> filter(String file) {
-        List<String> linesForReturn = new ArrayList<String>();
+        List<String> lines = new ArrayList<String>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            List<String> lines = new ArrayList<String>();
-            List<String> wordsArray = new ArrayList<String>();
-            in.lines().forEach(lines::add);
-            for (String line : lines) {
-                String[] words = line.split(" ");
-                for (String word : words) {
-                    if (word.equals("404")) {
-                        wordsArray.add(line);
-                        break;
-                }
-                }
-            }
-            lines.clear();
-            for (String elem : wordsArray) {
-                String[] words = elem.split(" ");
-                lines.addAll(Arrays.asList(words));
-                for (int i = 0; i < lines.size(); i++) {
-                    if(lines.get(i).equals("404") && isNumeric(lines.get(i + 1))) {
-                        linesForReturn.add(elem);
-                        lines.clear();
-                        break;
-                    }
-                }
-            }
+            lines.addAll(in.lines().filter(line -> line.contains("404")).collect(Collectors.toList()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return linesForReturn;
-    }
-
-    public static boolean isNumeric(String strNum) {
-        return strNum.matches("-?\\d+(\\.\\d+)?");
+        return lines;
     }
 
     public static void main(String[] args) {
