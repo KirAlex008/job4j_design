@@ -10,8 +10,7 @@ public class EvenNumberFile {
             while ((read = in.read()) != -1) {
                 text.append((char) read);
             }
-            //String a = "\\u000A";
-            String[] array = text.toString().split("\r?\n");
+            String[] array = text.toString().split(System.lineSeparator());
             for (String el : array) {
                 if (Integer.parseInt(el) % 2 != 0) {
                     System.out.println(el);
