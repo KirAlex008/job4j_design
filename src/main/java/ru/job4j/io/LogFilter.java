@@ -3,9 +3,7 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.io.*;
 
@@ -20,10 +18,21 @@ public class LogFilter {
         return lines;
     }
 
-    public static void main(String[] args) {
-        List<String> log = LogFilter.filter("log.txt");
-        for (var el : log) {
-            System.out.println(el);
+    public static void save(List<String> log, String file) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(file)
+                ))) {
+            for (var el : log) {
+                out.write(el + System.lineSeparator());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+    public static void main(String[] args) {
+        List<String> log = LogFilter.filter("log.txt");
+        save(log, "404.txt");
+        }
 }
