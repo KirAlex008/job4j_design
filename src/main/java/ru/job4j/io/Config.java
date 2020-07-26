@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.CharBuffer;
 import java.util.*;
 
 public class Config {
@@ -14,9 +15,12 @@ public class Config {
 
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().filter(line -> !(line.contains("##") || line.isEmpty()))
-            .map(s -> s.split("=", 2))
-            .forEach(s -> values.put(s[0],s[1]));
+            read.lines().filter(line -> !(line.contains("#")
+                    || line.isEmpty()
+                    || !line.contains("="))
+                    || line.substring(line.length()).equals("="))
+                    .map(s -> s.split("=", 2))
+                    .forEach(s -> values.put(s[0],s[1]));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,7 +42,13 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        String path = "./src/main/java/ru/job4j/io/app2.txt";
+        String path = "./src/main/java/ru/job4j/io/app.txt";
         Config conf = new Config(path);
+
+        //conf.load();
+        System.out.println(conf.toString());
+
+
+
     }
 }
