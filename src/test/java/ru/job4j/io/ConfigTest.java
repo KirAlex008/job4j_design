@@ -17,6 +17,7 @@ public class ConfigTest {
                 is("Petr Arsentev")
         );
     }
+
     @Test
     public void whenPairWithCommentAndLine() {
         String path = "./src/main/java/ru/job4j/io/app.txt";
