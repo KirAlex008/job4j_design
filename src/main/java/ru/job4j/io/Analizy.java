@@ -3,45 +3,32 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Analizy {
 
     public void unavailable(String source, String target) {
-        List<String[]> container = new ArrayList<>();
-        String start = "";
-        String stop = "";
-        try (BufferedReader read = new BufferedReader(new FileReader(source))) {
-            container.addAll(read.lines().filter(line -> !(line.isEmpty()))
-                    .map(s -> s.split(" ", 2))
-                    .collect(Collectors.toList()));
-            for (int i = 0; i < container.size(); i++) {
-                if ((container.get(i)[0].equals("400") || container.get(i)[0].equals("500"))
-                        && (i < container.size() - 1)
-                        && (container.get(i + 1)[0].equals("200") || container.get(i + 1)[0].equals("300"))) {
-                    start = container.get(i)[1];
+        List<String> container = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
+            String line;
+            String lineForWriting = "";
+            while((line = reader.readLine()) != null) {
+                if ((line.contains("400") || line.contains("500")) && (lineForWriting.equals(""))) {
+                    var strArr = line.split(" ");
+                    lineForWriting = lineForWriting + strArr[1] + ";";
                 }
-                if ((container.get(i)[0].equals("200") || container.get(i)[0].equals("300"))
-                        && (i < container.size() - 1)
-                        && (!start.equals(""))
-                        && (container.get(i + 1)[0].equals("400") || container.get(i + 1)[0].equals("500"))) {
-                    stop =  container.get(i)[1];
+                if ((line.contains("200") || line.contains("300")) && (!lineForWriting.equals(""))) {
+                    var strArr = line.split(" ");
+                    lineForWriting = lineForWriting + strArr[1] + System.lineSeparator();
+                    container.add(lineForWriting);
+                    lineForWriting = "";
                 }
-                if ((container.get(i)[0].equals("200") || container.get(i)[0].equals("300"))
-                        && (i == container.size() - 1)) {
-                    stop =  container.get(i)[1];
-                }
-                if (!start.equals("") && !stop.equals("")) {
-
-                    try (PrintWriter out = new PrintWriter(new BufferedOutputStream(
-                            new FileOutputStream(target, true)))) {
-                        out.write(start + ";" + stop + System.lineSeparator());
-                        start = "";
-                        stop = "";
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
+            for (var el : container) {
+                writer.write(el);
             }
         } catch (Exception e) {
             e.printStackTrace();
