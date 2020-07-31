@@ -1,0 +1,4 @@
+go
+break
+swim
+wolk
