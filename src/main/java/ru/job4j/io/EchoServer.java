@@ -15,15 +15,23 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
-                        System.out.println(str);
-                        if (str.contains("Bye")) {
+                        if (str.contains("Exit")) {
                             System.out.println("Server closed");
                             server.close();
                             workState = false;
                         }
-                    }
-                    if (workState == true) {
-                        out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                        if (str.contains("Hello")) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write("Hello, dear friend.".getBytes());
+                            workState = true;
+                        } else {
+                            if (str.contains("HTTP")) {
+                                out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                                out.write(str.substring(10, str.indexOf("HTTP")).getBytes());
+                                System.out.println(str);
+                                workState = true;
+                            }
+                        }
                     }
                 }
                 if (workState == false) {
