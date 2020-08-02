@@ -8,7 +8,7 @@ public class EchoServer {
     public static void main(String[] args) throws IOException {
         boolean workState = true;
         try (ServerSocket server = new ServerSocket(9000)) {
-            while (true) {
+            while (workState) {
                 Socket socket = server.accept();
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
@@ -25,7 +25,7 @@ public class EchoServer {
                             out.write("Hello, dear friend.".getBytes());
                             workState = true;
                         } else {
-                            if (str.contains("HTTP")) {
+                            if (str.contains("HTTP") && !(str.contains("Hello") && str.contains("Exit"))) {
                                 out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                                 out.write(str.substring(10, str.indexOf("HTTP")).getBytes());
                                 System.out.println(str);
