@@ -23,9 +23,12 @@ public class EchoServer {
                             server.close();
                             workState = false;
                         } else {
-                            out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                         }
                     }
+                }
+                if (workState == false) {
+                    break;
                 }
             }
         }
