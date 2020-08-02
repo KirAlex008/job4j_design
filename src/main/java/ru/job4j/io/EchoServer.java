@@ -15,27 +15,17 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
-                        if (str.contains("Exit")) {
+                        System.out.println(str);
+                        if (str.contains("Bye")) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write("Server closed".getBytes());
                             System.out.println("Server closed");
                             server.close();
                             workState = false;
-                        }
-                        if (str.contains("Hello")) {
-                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                            out.write("Hello, dear friend.".getBytes());
-                            workState = true;
                         } else {
-                            if (str.contains("HTTP") && !(str.contains("Hello") && str.contains("Exit"))) {
-                                out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                                out.write(str.substring(10, str.indexOf("HTTP")).getBytes());
-                                System.out.println(str);
-                                workState = true;
-                            }
+                            out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
                         }
                     }
-                }
-                if (workState == false) {
-                    break;
                 }
             }
         }
