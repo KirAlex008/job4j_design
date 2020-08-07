@@ -12,7 +12,7 @@ public class ArgsName {
         return values.get(key);
     }
 
-    private void parse(String[] args) {
+    public void parse(String[] args) {
         /* TODO parse args to values. */
         Arrays.stream(args)
                 .map(s -> s.split("=", 2))
