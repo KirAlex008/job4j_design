@@ -13,11 +13,13 @@ public class PredicateChoice {
             var ext = keysArr.get("n");
             if (ext.contains("*")) {
                 ext.substring(1);
+                System.out.println("ext" + "TEST EET");
             }
             predicate = p -> p.toFile().getName().endsWith(ext);
         }
         if (keysArr.containsKey("f")) {
             predicate = p -> p.toFile().getName().equals(keysArr.get("n"));
+            System.out.println("EQUALS");
         }
         return predicate;
     }

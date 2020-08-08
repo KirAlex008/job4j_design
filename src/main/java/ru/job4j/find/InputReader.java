@@ -8,12 +8,23 @@ import java.util.Map;
 public class InputReader {
     private final String[] args;
     private String str;
+
+    public Map<String, String> getInputKeys() {
+        return inputKeys;
+    }
+
+    public void setInputKeys(Map<String, String> inputKeys) {
+        this.inputKeys = inputKeys;
+    }
+
+    private Map<String, String> inputKeys = new HashMap<String,String>();
+
     public InputReader(String[] args) {
         this.args = args;
     }
 
     //String str = new String("-d c:/ -n *.txt -m -o log.txt");
-    public Map<String, String> inputKeys = new HashMap<String,String>();
+
 
     public boolean validateArgs() {
         boolean inputIsValid = true;
@@ -30,7 +41,6 @@ public class InputReader {
     }
     public void concatenateArgs() {
         str = String.join(" ", args);
-        System.out.println(str);
         }
 
     public void read() {
@@ -56,13 +66,14 @@ public class InputReader {
     public static void main(String[] args) {
         InputReader inp = new InputReader(args);
         inp.concatenateArgs();
-        System.out.println(inp.str);
+        System.out.println(inp.str + "ConcSTR");
         inp.read();
         for (var el : inp.inputKeys.keySet()) {
             System.out.println(inp.inputKeys.get(el));
             System.out.println(el);
         }
         System.out.println(inp.inputKeys);
+        System.out.println(inp.getInputKeys());
     }
 /*    public static void main(String[] args) {
         for (var el : args) {

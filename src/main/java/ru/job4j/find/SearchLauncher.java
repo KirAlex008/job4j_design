@@ -15,12 +15,11 @@ public class SearchLauncher {
         inputArgs.concatenateArgs();
         inputArgs.read();
         inputArgs.validateArgs();
-        Map<String, String> keysArr = inputArgs.inputKeys;
+        Map<String, String> keysArr = inputArgs.getInputKeys();
         PredicateChoice predicateOfSearch = new PredicateChoice(); // выбор предиката
-        predicateOfSearch.choice(keysArr);
-        List<Path> listOfFiles = Search.search(Paths.get(keysArr.get("d")),
-                predicateOfSearch.choice(keysArr)); // поиск в каталоге с предикатом
-        Writer writer = new Writer(listOfFiles);
+        List<Path> listOfFiles = Search.search(Paths.get(keysArr.get("d")), predicateOfSearch.choice(keysArr)); // поиск в каталоге с предикатом
+        System.out.println(keysArr.get("o"));
+        Writer writer = new Writer(listOfFiles, keysArr.get("o"));
         writer.wordWrite();
     }
 }
