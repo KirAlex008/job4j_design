@@ -12,14 +12,10 @@ import java.util.function.Predicate;
 public class SearchLauncher {
     public static void main(String[] args) throws IOException {
         InputReader inputArgs = new InputReader(args); // получает из строки ввода команды, возвращает массив ключей
-        inputArgs.concatenateArgs();
-        inputArgs.read();
         inputArgs.validateArgs();
-        Map<String, String> keysArr = inputArgs.getInputKeys();
-        PredicateChoice predicateOfSearch = new PredicateChoice(); // выбор предиката
-        List<Path> listOfFiles = Search.search(Paths.get(keysArr.get("d")), predicateOfSearch.choice(keysArr)); // поиск в каталоге с предикатом
-        System.out.println(keysArr.get("o"));
-        Writer writer = new Writer(listOfFiles, keysArr.get("o"));
+        PredicateChoice predicateOfSearch = new PredicateChoice(args); // выбор предиката
+        List<Path> listOfFiles = Search.search(Paths.get(args[1]), predicateOfSearch.choice()); // поиск в каталоге с предикатом
+        Writer writer = new Writer(listOfFiles, args[6]);
         writer.wordWrite();
     }
 }

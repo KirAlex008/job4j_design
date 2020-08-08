@@ -6,6 +6,7 @@ c:\projects\job4j_design\404.txt
 c:\projects\job4j_design\app.txt
 c:\projects\job4j_design\even.txt
 c:\projects\job4j_design\input.txt
+c:\projects\job4j_design\log.txt
 c:\projects\job4j_design\out\artifacts\job4j_design_jar\log.txt
 c:\projects\job4j_design\src\main\java\ru\job4j\io\app.txt
 c:\projects\job4j_design\src\main\java\ru\job4j\io\app2.txt

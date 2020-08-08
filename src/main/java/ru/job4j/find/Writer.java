@@ -15,11 +15,6 @@ public class Writer {
         this.stringOfPath = stringOfPath;
     }
 
-    /*public Writer(List<Path> listOfFiles, String o) {
-        this.wordsToWrite = wordsToWrite;
-        this.stringOfPath = stringOfPath;
-    }*/
-
     public Path pathGet() {
         stringOfPath = "./" + stringOfPath;
         System.out.println(Paths.get(stringOfPath));
@@ -36,8 +31,4 @@ public class Writer {
         e.printStackTrace();
         }
     }
-
-    /*public static void main(String[] args) {
-        var test = pathGet();
-    }*/
 }

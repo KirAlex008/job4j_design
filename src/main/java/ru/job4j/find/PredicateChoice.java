@@ -7,19 +7,17 @@ import java.util.function.Predicate;
 
 public class PredicateChoice {
     Predicate<Path> predicate;
+    String[] args;
 
-    public Predicate<Path> choice(Map<String, String> keysArr) {
-        if (keysArr.containsKey("m")) {
-            var ext = keysArr.get("n");
-            if (ext.contains("*")) {
-                ext.substring(1);
-                System.out.println("ext" + "TEST EET");
-            }
-            predicate = p -> p.toFile().getName().endsWith(ext);
-        }
-        if (keysArr.containsKey("f")) {
-            predicate = p -> p.toFile().getName().equals(keysArr.get("n"));
-            System.out.println("EQUALS");
+    public PredicateChoice(String[] args) {
+        this.args = args;
+    }
+
+    public Predicate<Path> choice() {
+        if (args[4].equals("-m") && args[3].contains("*")) {
+            predicate = p -> p.toFile().getName().endsWith(args[3].substring(1));
+        } else if (args[3].contains("f")) {
+            predicate = p -> p.toFile().getName().equals(args[3]);
         }
         return predicate;
     }
