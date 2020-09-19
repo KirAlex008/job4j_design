@@ -41,12 +41,17 @@ insert into car(name, body_id, engine_id, transmission_id) values ('car_2', 3, 4
 insert into car(name, body_id, engine_id, transmission_id) values ('car_3', 4, 1, 2);
 
 
-select c.name, c.body_id, c.engine_id, c.transmission_id from car as c;
+select c.name, b.name, e.name, t.name from car as c
+    left outer join body as b on b.id = c.body_id
+    join engine as e on e.id = c.engine_id
+    join transmission as t on t.id = c.transmission_id;
 
 select  b.name from body as b left outer join car as c on b.id = c.body_id where c.body_id is null;
 
 select  e.name from engine as e left outer join car as c on e.id = c.engine_id where c.engine_id is null;
 
 select  t.name from transmission as t left outer join car as c on t.id = c.transmission_id where c.transmission_id is null;
+
+
 
 
