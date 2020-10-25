@@ -111,3 +111,6 @@ G1 Old Generation:
 Создано всего 4 региона и не один из них не смог быть назначен как Eden, Survivor, Old Generation.
 
 Exception: java.lang.OutOfMemoryError thrown from the UncaughtExceptionHandler in thread "RMI TCP Connection(idle)"
+
+В прошлом задании был сделан вывод, что Tracker на локальной машине лучше иметь Serial GC. Соответственно запуск с ключами -Xmx4m -Xms4m -XX:+UseSerialGC позволяет приложению запуститься,
+ и функционировать. Eden + 1 Survivor Space 1.1875MB tenured generation 2.6875MB
