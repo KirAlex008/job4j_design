@@ -24,6 +24,10 @@ public class ProgramingDepartment extends Department{
             report = new HTMLReport();
         } else if (type.equals("string")) {
             report = new SimpleStringReport();
+        } else if (type.equals("xml")) {
+            report = new XMLReport();
+        } else if (type.equals("json")) {
+            report = new JSONReport();
         }
         return report;
     }

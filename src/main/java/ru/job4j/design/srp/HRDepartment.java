@@ -25,6 +25,10 @@ public class HRDepartment extends Department{
             report = new SimpleStringReport();
         } else if (type.equals("stringShortened")) {
             report = new SimpleStringReportShortened();
+        } else if (type.equals("xml")) {
+            report = new XMLReport();
+        } else if (type.equals("json")) {
+            report = new JSONReport();
         }
         return report;
     }
