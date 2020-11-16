@@ -2,12 +2,11 @@ package ru.job4j.design.srp;
 
 import java.util.function.Predicate;
 
-public class ReportEngine extends CommonReportEngine{
+public class ReportEngineOld {
 
     private Store store;
 
-    public ReportEngine(Store store) {
-        super(store);
+    public ReportEngineOld(Store store) {
         this.store = store;
     }
 

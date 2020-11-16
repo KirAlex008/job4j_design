@@ -6,16 +6,18 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.io.IOException;
 
-public class ReportEngineForProgTest {
-
+public class ProgramingDepartmentTest {
     @Test
     public void whenProgGenerated() throws IOException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employer worker = new Employer("Ivan", now, now, 100);
         store.add(worker);
-        ReportEngineForProg engine = new ReportEngineForProg(store);
-                StringBuilder expect = new StringBuilder()
+        ProgramingDepartment department = new ProgramingDepartment(store, em -> true);
+        Report report = department.createReport("html");
+        var listOfElem = department.prepareReport();
+        String result = report.generate(listOfElem);
+        StringBuilder expect = new StringBuilder()
                 .append("<!DOCTYPE html>").append(System.lineSeparator())
                 .append("<html lang=\"en\">").append(System.lineSeparator())
                 .append("<head>").append(System.lineSeparator())
@@ -29,7 +31,6 @@ public class ReportEngineForProgTest {
                 .append("<p>Salary: ").append(String.valueOf(worker.getSalary())).append("</p>").append(System.lineSeparator())
                 .append("</body>").append(System.lineSeparator())
                 .append("</html>");
-        String result = engine.generate(em -> true);
         String expected = expect.toString();
         assertThat(result, is(expected));
     }

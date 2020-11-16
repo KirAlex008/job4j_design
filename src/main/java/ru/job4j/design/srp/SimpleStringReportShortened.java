@@ -1,22 +1,13 @@
 package ru.job4j.design.srp;
 
-import java.util.Collections;
-import java.util.function.Predicate;
+import java.io.IOException;
+import java.util.List;
 
-public class ReportEngineForHR extends CommonReportEngine{
-
-    private Store store;
-
-    public ReportEngineForHR(Store store) {
-        super(store);
-        this.store = store;
-    }
-
-    public String generate(Predicate<Employer> filter) {
+public class SimpleStringReportShortened implements Report{
+    @Override
+    public String generate(List<Employer> list) throws IOException {
         StringBuilder text = new StringBuilder();
         text.append("Name; Salary;");
-        var list = store.findBy(filter);
-        Collections.sort(list, Collections.reverseOrder());
         for (Employer employee : list) {
             text.append(System.lineSeparator())
                     .append(employee.getName()).append(";")
@@ -25,5 +16,4 @@ public class ReportEngineForHR extends CommonReportEngine{
         }
         return text.toString();
     }
-
 }

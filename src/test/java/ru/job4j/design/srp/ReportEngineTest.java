@@ -13,7 +13,7 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employer worker = new Employer("Ivan", now, now, 100);
         store.add(worker);
-        ReportEngine engine = new ReportEngine(store);
+        ReportEngineOld engine = new ReportEngineOld(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())

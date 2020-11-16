@@ -1,25 +1,21 @@
 package ru.job4j.design.srp;
 
-import java.io.*;
-import java.util.function.Predicate;
 import org.apache.commons.io.FileUtils;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
 
-public class ReportEngineForProg extends CommonReportEngine{
-    private Store store;
-
-    public ReportEngineForProg(Store store) {
-        super(store);
-        this.store = store;
-    }
-
-    public String generate(Predicate<Employer> filter) throws IOException {
+public class HTMLReport implements Report{
+    @Override
+    public String generate(List<Employer> list) throws IOException {
         File htmlTemplateFile = new File("C:/projects/job4j_design/src/main/resources/template.html");
         String htmlString = FileUtils.readFileToString(htmlTemplateFile, "UTF-8");
-        String rsl = null;
         //File newHtmlFile = new File("path/new.html");
         //FileUtils.writeStringToFile(newHtmlFile, htmlString);
-
-        for (Employer employee : store.findBy(filter)) {
+        String rsl = null;
+        for (Employer employee : list) {
             String name = employee.getName();
             String hired = employee.getHired().toString();
             String fired = employee.getFired().toString();
