@@ -7,39 +7,35 @@ public class SupermarketParcking extends AbstrParking {
 
     @Override
     public int getFreePlaceOfTracks() {
-        int occupancyPlaces = 0;
-        for (var el : this.getParkPlacesForTrucks()) {
-            if (el.occupancy == true) {
-                occupancyPlaces++;
-            }
-        }
-        return this.getParkPlacesForTrucks().length - occupancyPlaces;
+        return this.getAmountOfTracks() - this.getListOfTracks().size();
     }
 
     @Override
     public int getFreePlaceOfCars() {
-        int occupancyPlaces = 0;
-        for (var el : this.getParkPlacesForCars()) {
-            if (el.occupancy == true) {
-                occupancyPlaces++;
-            }
-        }
-        return this.getParkPlacesForCars().length - occupancyPlaces;
+        return this.getAmountOfCars() - this.getListOfCars().size();
     }
 
     @Override
     public void replaceVehicle(Vehicle vehicle) {
+        int times = vehicle.getVehicleSize();
+        if (times == 1 && this.getCounterCarCells() < this.getAmountOfCars() - 1) {
+            //int index = this.getCounterCarCells() + 1;
+            this.setCounterCarCells(this.getCounterCarCells() + 1);
+            this.getListOfCars().add(vehicle);
+            //System.out.println("1");
+        }
+        if (times > 1 && this.getCounterTruckCells() > this.getAmountOfTracks() - 1) {
+            for (int i = 1; i <= times; i++) {
+                this.setCounterCarCells(this.getCounterCarCells() + 1);
+                this.getListOfCars().add(vehicle);
+                //System.out.println("2");
+            }
+        }
+        if (times > 1 && this.getCounterTruckCells() <= this.getAmountOfTracks() - 1) {
+            this.setCounterTruckCells(this.getCounterTruckCells() + 1);
+            this.getListOfTracks().add(vehicle);
+            //System.out.println("3");
+        }
 
     }
-
-    @Override
-    public ParkPlace[] getParkPlacesForCars() {
-        return super.getParkPlacesForCars();
-    }
-
-    @Override
-    public ParkPlace[] getParkPlacesForTrucks() {
-        return super.getParkPlacesForTrucks();
-    }
-
 }

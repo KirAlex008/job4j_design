@@ -1,8 +1,8 @@
 package ru.job4j.parking;
 
 public abstract class ParkPlace {
-    int numberOfCar;
-    boolean occupancy;
+    private int numberOfCar;
+    private boolean occupancy;
 
     public int getNumberOfCar() {
         return numberOfCar;

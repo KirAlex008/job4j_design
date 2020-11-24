@@ -11,11 +11,13 @@ public class SupermarketParckingTest {
         Vehicle car1 = new Car(1,1);
         Vehicle truck1 = new Truck(2,1);
         Vehicle truck2 = new Truck(2,2);
+        Vehicle truck3 = new Truck(2,3);
         Parking parcking = new SupermarketParcking(10,1);
         parcking.replaceVehicle(car1);
         parcking.replaceVehicle(truck1);
         parcking.replaceVehicle(truck2);
-        int expect = 7;
+        parcking.replaceVehicle(truck3);
+        int expect = 5;
         int result = parcking.getFreePlaceOfCars();
         assertThat(result, is(expect));
     }

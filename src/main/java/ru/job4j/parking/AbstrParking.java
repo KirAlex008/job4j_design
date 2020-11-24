@@ -2,18 +2,18 @@ package ru.job4j.parking;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public abstract class AbstrParking implements Parking {
 
     private int amountOfCars;
     private int amountOfTracks;
-    //private List<AbstrVehicle> listOfCars  = new ArrayList<>();
-    //private List<AbstrVehicle> listOfTracks  = new ArrayList<>();
+    private int counterCarCells = 0;
+    private int counterTruckCells = 0;
+    private List<Vehicle> listOfCars  = new ArrayList<>();
+    private List<Vehicle> listOfTracks  = new ArrayList<>();
 
-    private ParkPlace [] parkPlacesForCars = new ParkPlace[amountOfCars];
-    private ParkPlace [] parkPlacesForTrucks = new ParkPlace[amountOfTracks];
+    //private ParkPlace [] parkPlacesForCars = new ParkPlace[amountOfCars];
+    //private ParkPlace [] parkPlacesForTrucks = new ParkPlace[amountOfTracks];
 
     public AbstrParking(int amountOfCars, int amountOfTracks) {
         this.amountOfCars = amountOfCars;
@@ -24,11 +24,36 @@ public abstract class AbstrParking implements Parking {
     public abstract int getFreePlaceOfCars();
     public abstract void replaceVehicle(Vehicle vehicle);
 
-    public ParkPlace[] getParkPlacesForCars() {
-        return parkPlacesForCars;
+
+    public List<Vehicle> getListOfCars() {
+        return listOfCars;
     }
 
-    public ParkPlace[] getParkPlacesForTrucks() {
-        return parkPlacesForTrucks;
+    public List<Vehicle> getListOfTracks() {
+        return listOfTracks;
+    }
+
+    public int getAmountOfCars() {
+        return amountOfCars;
+    }
+
+    public int getAmountOfTracks() {
+        return amountOfTracks;
+    }
+
+    public int getCounterCarCells() {
+        return counterCarCells;
+    }
+
+    public void setCounterCarCells(int counterCarCells) {
+        this.counterCarCells = counterCarCells;
+    }
+
+    public int getCounterTruckCells() {
+        return counterTruckCells;
+    }
+
+    public void setCounterTruckCells(int counterTruckCells) {
+        this.counterTruckCells = counterTruckCells;
     }
 }
