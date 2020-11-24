@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Shop extends AbstractStorageHandler{
 
-    List<Food> list = new ArrayList<>();
+
 
     public Shop(Date today) {
         super(today);

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Trash extends AbstractStorageHandler {
 
-    List<Food> list = new ArrayList<>();
+
 
     public Trash(Date today) {
         super(today);

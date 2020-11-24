@@ -4,7 +4,7 @@ import java.util.*;
 
 public class WareHouse extends AbstractStorageHandler{
 
-    List<Food> list = new ArrayList<>();
+
 
     public WareHouse(Date today) {
         super(today);
