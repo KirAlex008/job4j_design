@@ -7,21 +7,39 @@ public class SupermarketParcking extends AbstrParking {
 
     @Override
     public int getFreePlaceOfTracks() {
-        return 0;
+        int occupancyPlaces = 0;
+        for (var el : this.getParkPlacesForTrucks()) {
+            if (el.occupancy == true) {
+                occupancyPlaces++;
+            }
+        }
+        return this.getParkPlacesForTrucks().length - occupancyPlaces;
     }
 
     @Override
     public int getFreePlaceOfCars() {
-        return 0;
+        int occupancyPlaces = 0;
+        for (var el : this.getParkPlacesForCars()) {
+            if (el.occupancy == true) {
+                occupancyPlaces++;
+            }
+        }
+        return this.getParkPlacesForCars().length - occupancyPlaces;
     }
 
     @Override
-    public void replaceTrack() {
+    public void replaceVehicle(Vehicle vehicle) {
 
     }
 
     @Override
-    public void replaceCar() {
-
+    public ParkPlace[] getParkPlacesForCars() {
+        return super.getParkPlacesForCars();
     }
+
+    @Override
+    public ParkPlace[] getParkPlacesForTrucks() {
+        return super.getParkPlacesForTrucks();
+    }
+
 }

@@ -1,8 +1,8 @@
 package ru.job4j.parking;
 
-public class Car extends AbstrVehicle{
+public class Truck extends AbstrVehicle {
 
-    public Car(int vehicleSize, int idOfVehicle) {
+    public Truck(int vehicleSize, int idOfVehicle) {
         super(vehicleSize, idOfVehicle);
     }
 
