@@ -17,6 +17,7 @@ public class SupermarketParcking extends AbstrParking {
 
     @Override
     public void replaceVehicle(Vehicle vehicle) {
+        boolean flag = false;
         int times = vehicle.getVehicleSize();
         if (times == 1 && this.getCounterCarCells() < this.getAmountOfCars() - 1) {
             //int index = this.getCounterCarCells() + 1;
@@ -24,17 +25,19 @@ public class SupermarketParcking extends AbstrParking {
             this.getListOfCars().add(vehicle);
             //System.out.println("1");
         }
-        if (times > 1 && this.getCounterTruckCells() > this.getAmountOfTracks() - 1) {
+
+        if (times > 1 && this.getCounterTruckCells() <= this.getAmountOfTracks() - 1) {
+            this.setCounterTruckCells(this.getCounterTruckCells() + 1);
+            this.getListOfTracks().add(vehicle);
+            flag = true;
+            //System.out.println("3");
+        }
+        if (!flag && times > 1 && this.getCounterTruckCells() > this.getAmountOfTracks() - 1) {
             for (int i = 1; i <= times; i++) {
                 this.setCounterCarCells(this.getCounterCarCells() + 1);
                 this.getListOfCars().add(vehicle);
                 //System.out.println("2");
             }
-        }
-        if (times > 1 && this.getCounterTruckCells() <= this.getAmountOfTracks() - 1) {
-            this.setCounterTruckCells(this.getCounterTruckCells() + 1);
-            this.getListOfTracks().add(vehicle);
-            //System.out.println("3");
         }
 
     }
