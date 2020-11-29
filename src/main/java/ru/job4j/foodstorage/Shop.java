@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Shop extends AbstractStorageHandler{
 
-
-
     public Shop(Date today) {
         super(today);
     }
