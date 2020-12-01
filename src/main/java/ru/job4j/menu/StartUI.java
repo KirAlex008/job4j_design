@@ -19,8 +19,8 @@ public class StartUI {
         root.printTree(root);
         String select = input.askStr("Select: ");
         MenuItem choice;
-        choice = root.find(select, root);
-        rsl = choice.getAction().execute();
+        //choice = root.find(select, root);
+        //rsl = choice.getAction().execute();
     }
 }
 

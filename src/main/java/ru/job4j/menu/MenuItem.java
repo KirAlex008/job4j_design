@@ -1,9 +1,9 @@
 package ru.job4j.menu;
 
 public class MenuItem {
-    String name;
-    int number;
-    UserAction action;
+    private String name;
+    private int number;
+    private UserAction action;
 
     public MenuItem(String name, int number, UserAction action) {
         this.name = name;
