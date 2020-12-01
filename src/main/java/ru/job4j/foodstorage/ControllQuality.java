@@ -2,6 +2,7 @@ package ru.job4j.foodstorage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +55,21 @@ public class ControllQuality {
             handlerChain.add(el);
         }
     }
+    public void resort(Date today) {
+        List<Food> foodList = new ArrayList<>();
+        foodList.addAll(warehouse.getList());
+        foodList.addAll(shop.getList());
+        AbstractStorageHandler warehouse = new WareHouse(today);
+        AbstractStorageHandler shop = new Shop(today);
+        AbstractStorageHandler trash = new Trash(today);
+        warehouse.setNextHandler(shop);
+        shop.setNextHandler(trash);
+        Storage handlerChain = warehouse;
+        for (Food el : foodList) {
+            handlerChain.add(el);
+        }
+    }
+
 
     public static void main(String[] args) throws ParseException {
         ControllQuality control = new ControllQuality();
@@ -76,6 +92,19 @@ public class ControllQuality {
         List<Food> list1 = control.getWarehouse().getList();
         List<Food> list2 = control.getShop().getList();
         List<Food> list3 = control.getTrash().getList();
+        for (Food el : list1){
+            System.out.println(el.toString() + "1");
+        }
+        for (Food el : list2){
+            System.out.println(el.toString() + "2");
+        }
+        for (Food el : list3){
+            System.out.println(el.toString() + "3");
+        }
+        control.resort(new Date(2020, 12, 1));
+        List<Food> list4 = control.getWarehouse().getList();
+        List<Food> list5 = control.getShop().getList();
+        List<Food> list6 = control.getTrash().getList();
         for (Food el : list1){
             System.out.println(el.toString() + "1");
         }
