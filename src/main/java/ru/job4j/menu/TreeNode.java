@@ -1,7 +1,9 @@
 package ru.job4j.menu;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class TreeNode<T> implements AddNode<T>, TraverseTree<T>, ShowAll<T>, FindNode<T> {
     private T value = null;
@@ -39,25 +41,26 @@ public class TreeNode<T> implements AddNode<T>, TraverseTree<T>, ShowAll<T>, Fin
         return newChild;
     }
 
-    @Override
+     @Override
     public MenuItem find(String string, T object) {
-        MenuItem rsl = null;
-        TreeNode obj;
-        obj = (TreeNode) object;
-        if (obj.getValue().toString().equals(string)) {
-            rsl = (MenuItem) obj.value;
-        }
-        for (int i = 0; i < obj.getChildrens().size(); i++) {
-            TreeNode objTree2 = (TreeNode) obj.getChildrens().get(i);
-            if (objTree2.getValue().toString().equals(string)) {
-                rsl = (MenuItem) objTree2.getValue();
-                break;
-            }
-            find(string, (T) objTree2);
-        }
-        return rsl;
+         MenuItem rsl = null;
+         Queue<TreeNode> queue = new LinkedList<>();
+         TreeNode obj = (TreeNode) object;
+         queue.add(obj);
+         while (!queue.isEmpty()) {
+             TreeNode node = queue.remove();
+             if (node.getValue().toString().equals(string)) {
+                 rsl = (MenuItem) node.value;
+                 break;
+             } else {
+                 for (var el : node.getChildrens()) {
+                     TreeNode nodeEl = (TreeNode) el;
+                     queue.add(nodeEl);
+                 }
+             }
+         }
+         return rsl;
     }
-
 
     public T getValue() {
         return value;
