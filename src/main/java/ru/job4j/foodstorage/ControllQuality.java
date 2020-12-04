@@ -8,71 +8,38 @@ import java.util.List;
 
 public class ControllQuality {
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private static Date today;
+    private Storage chain;
 
-    static {
-        try {
-            today = sdf.parse(sdf.format(new Date(2020, 11, 20)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static AbstractStorageHandler warehouse = new WareHouse(today);
-    private static AbstractStorageHandler shop = new Shop(today);
-    private static AbstractStorageHandler trash = new Trash(today);
-
-    public AbstractStorageHandler getWarehouse() {
-        return warehouse;
-    }
-
-    public AbstractStorageHandler getShop() {
-        return shop;
-    }
-
-    public AbstractStorageHandler getTrash() {
-        return trash;
-    }
-
-    public static int quality(Food food, Date today){
-        long periodOfGoodQuality = food.expaireDate.getTime() - food.createDate.getTime();
-        long lastTimeOfGooDQuality = food.expaireDate.getTime() - today.getTime();
-        int percentOfQuality = (int) (lastTimeOfGooDQuality * 100 / periodOfGoodQuality);
-        //int days =  (int)(periodOfGoodQuality / (24 * 60 * 60 * 1000));
-        return percentOfQuality;
-    }
-
-    public static Storage getChainOfStorage() {
-        warehouse.setNextHandler(shop);
-        shop.setNextHandler(trash);
-        return warehouse;
+    public ControllQuality(Storage chain) {
+        this.chain = chain;
     }
 
     public void executor(List<Food> list) {
-        Storage handlerChain = getChainOfStorage();
         for (Food el : list) {
-            handlerChain.add(el);
-        }
-    }
-    public void resort(Date today) {
-        List<Food> foodList = new ArrayList<>();
-        foodList.addAll(warehouse.getList());
-        foodList.addAll(shop.getList());
-        AbstractStorageHandler warehouse = new WareHouse(today);
-        AbstractStorageHandler shop = new Shop(today);
-        AbstractStorageHandler trash = new Trash(today);
-        warehouse.setNextHandler(shop);
-        shop.setNextHandler(trash);
-        Storage handlerChain = warehouse;
-        for (Food el : foodList) {
-            handlerChain.add(el);
+            chain.add(el);
         }
     }
 
+    public void resort() {
+        List<Food> foodList = new ArrayList<>();
+        foodList.addAll(chain.getList());
+        chain.clearAll();
+        Storage storage = chain;
+        for (int i = 1; i < StoragesChain.numberOfStorage(); i++ ) {
+            foodList.addAll(storage.getNextHandler().getList());
+            storage = storage.getNextHandler();
+            storage.clearAll();
+        }
+        executor(foodList);
+    }
+
+    public Storage getChain() {
+        return chain;
+    }
 
     public static void main(String[] args) throws ParseException {
-        ControllQuality control = new ControllQuality();
+        Storage chain = StoragesChain.getChainOfStorage();
+        ControllQuality control = new ControllQuality(chain);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //Date today = sdf.parse(sdf.format(new Date(2020, 11, 20)));
         Date expaireDate = sdf.parse(sdf.format(new Date(2020, 11, 30)));
@@ -89,9 +56,9 @@ public class ControllQuality {
         Food food4 = new Food1("food4",expaireDate, createDate, 100, 30);
         List<Food> list = List.of(food1,food2, food3, food4);
         control.executor(list);
-        List<Food> list1 = control.getWarehouse().getList();
-        List<Food> list2 = control.getShop().getList();
-        List<Food> list3 = control.getTrash().getList();
+        List<Food> list1 = control.getChain().getList();
+        List<Food> list2 = control.getChain().getNextHandler().getList();
+        List<Food> list3 = control.getChain().getNextHandler().getNextHandler().getList();
         for (Food el : list1){
             System.out.println(el.toString() + "1");
         }
@@ -101,10 +68,11 @@ public class ControllQuality {
         for (Food el : list3){
             System.out.println(el.toString() + "3");
         }
-        control.resort(new Date(2020, 12, 1));
-        List<Food> list4 = control.getWarehouse().getList();
-        List<Food> list5 = control.getShop().getList();
-        List<Food> list6 = control.getTrash().getList();
+        control.resort();
+
+        list1 = control.getChain().getList();
+        list2 = control.getChain().getNextHandler().getList();
+        list3 = control.getChain().getNextHandler().getNextHandler().getList();
         for (Food el : list1){
             System.out.println(el.toString() + "1");
         }

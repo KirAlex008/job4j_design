@@ -4,8 +4,6 @@ import java.util.*;
 
 public class WareHouse extends AbstractStorageHandler{
 
-
-
     public WareHouse(Date today) {
         super(today);
     }
@@ -23,6 +21,11 @@ public class WareHouse extends AbstractStorageHandler{
             }
         }
         return flag;
+    }
+
+    @Override
+    public void clearAll() {
+        this.list.clear();
     }
 
     public void get(int i) {

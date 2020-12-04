@@ -9,7 +9,7 @@ import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static ru.job4j.foodstorage.ControllQuality.quality;
+import static ru.job4j.foodstorage.AbstractStorageHandler.quality;
 
 public class ControllQualityTest {
 
@@ -20,7 +20,8 @@ public class ControllQualityTest {
             Date expaireDate = sdf.parse(sdf.format(new Date(2020, 11, 30)));
             Date createDate = sdf.parse(sdf.format(new Date(2020, 11, 17)));
             Food food = new Food1("food1",expaireDate, createDate, 100, 30);
-            ControllQuality control = new ControllQuality();
+            Storage chain = StoragesChain.getChainOfStorage();
+            ControllQuality control = new ControllQuality(chain);
             int result = quality(food, today);
             System.out.println(result);
             int expect = 76;
@@ -34,7 +35,8 @@ public class ControllQualityTest {
         Date expaireDate = sdf.parse(sdf.format(new Date(2020, 11, 25)));
         Date createDate = sdf.parse(sdf.format(new Date(2020, 11, 17)));
         Food food = new Food1("food1",expaireDate, createDate, 100, 30);
-        ControllQuality control = new ControllQuality();
+        Storage chain = StoragesChain.getChainOfStorage();
+        ControllQuality control = new ControllQuality(chain);
         int result = quality(food, today);
         System.out.println(result);
         int expect = 62;
@@ -48,7 +50,8 @@ public class ControllQualityTest {
         Date expaireDate = sdf.parse(sdf.format(new Date(2020, 11, 22)));
         Date createDate = sdf.parse(sdf.format(new Date(2020, 11, 10)));
         Food food = new Food1("food1",expaireDate, createDate, 100, 30);
-        ControllQuality control = new ControllQuality();
+        Storage chain = StoragesChain.getChainOfStorage();
+        ControllQuality control = new ControllQuality(chain);
         int result = quality(food, today);
         System.out.println(result);
         int expect = 16;
@@ -62,7 +65,8 @@ public class ControllQualityTest {
         Date expaireDate = sdf.parse(sdf.format(new Date(2020, 11, 19)));
         Date createDate = sdf.parse(sdf.format(new Date(2020, 11, 10)));
         Food food = new Food1("food1",expaireDate, createDate, 100, 30);
-        ControllQuality control = new ControllQuality();
+        Storage chain = StoragesChain.getChainOfStorage();
+        ControllQuality control = new ControllQuality(chain);
         int result = quality(food, today);
         System.out.println(result);
         int expect = -11;

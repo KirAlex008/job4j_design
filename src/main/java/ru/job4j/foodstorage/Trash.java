@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Trash extends AbstractStorageHandler {
 
-
-
     public Trash(Date today) {
         super(today);
     }
@@ -27,6 +25,12 @@ public class Trash extends AbstractStorageHandler {
         }
         return flag;
     }
+
+    @Override
+    public void clearAll() {
+        this.list.clear();
+    }
+
     @Override
     public List<Food> getList() {
         return list;

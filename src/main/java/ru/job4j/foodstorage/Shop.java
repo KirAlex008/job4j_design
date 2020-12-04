@@ -32,6 +32,11 @@ public class Shop extends AbstractStorageHandler{
     }
 
     @Override
+    public void clearAll() {
+        this.list.clear();
+    }
+
+    @Override
     public List<Food> getList() {
         return list;
     }
